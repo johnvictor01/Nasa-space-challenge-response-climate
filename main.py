@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from datetime import datetime, timedelta
 from pydantic import BaseModel
-from server.previsao_service import prever_cidade_data
+from src.server.previsao_service import prever_cidade_data
 
 app = FastAPI(title="Previsão Climática")
 erro = {
