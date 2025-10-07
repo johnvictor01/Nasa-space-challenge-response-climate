@@ -39,28 +39,27 @@ CIDADES_PB = [
     'paraiba-bayeux'
 ]
 
-
 @app.get("/previsao/")
-def previsao(request: PrevisaoRequest):
-    
-    print(f"Recebendo requisição: cidade={request.cidade}, data={request.data}")
-    if request.cidade ==(0 or "0") or request.data == (1 or "1"):
+def previsao(cidade: str, data: str):
+    print(f"Recebendo requisição: cidade={cidade}, data={data}")
+
+    if cidade in ("0", 0) or data in ("1", 1):
         print("Erro: Cidade ou data inválida")
         return erro
-    
+
     try:
-        data_dt = datetime.strptime(request.data, "%Y-%m-%d")
+        data_dt = datetime.strptime(data, "%Y-%m-%d")
     except ValueError:
         print("Erro: Data inválida")
         raise HTTPException(status_code=400, detail="Data inválida. Use YYYY-MM-DD.")
 
     hoje = datetime.today()
     limite = hoje + timedelta(days=14)
-    #if not (hoje <= data_dt <= limite):
-     #   print("Erro: Data fora do intervalo permitido")
-      #  raise HTTPException(status_code=400, detail="Data fora do intervalo permitido (até 2 semanas).")
+    # if not (hoje <= data_dt <= limite):
+    #     print("Erro: Data fora do intervalo permitido")
+    #     raise HTTPException(status_code=400, detail="Data fora do intervalo permitido (até 2 semanas).")
 
-    resultado = prever_cidade_data(request.cidade, data_dt)
+    resultado = prever_cidade_data(cidade, data_dt)
     print(f"Resultado gerado: {resultado}")
     return resultado
 
