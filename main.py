@@ -40,8 +40,9 @@ CIDADES_PB = [
 ]
 
 
-@app.post("/previsao/")
+@app.get("/previsao/")
 def previsao(request: PrevisaoRequest):
+    
     print(f"Recebendo requisição: cidade={request.cidade}, data={request.data}")
     if request.cidade ==(0 or "0") or request.data == (1 or "1"):
         print("Erro: Cidade ou data inválida")
